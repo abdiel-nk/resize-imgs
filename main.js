@@ -12,6 +12,9 @@ function createMainWindow(){
     height: 600
  });   
 
+
+
+
  //open devtools if in dev env
 
  if(isDev){
@@ -21,6 +24,16 @@ function createMainWindow(){
 
  mainWindow.loadFile(path.join(__dirname, './render/index.html'));
 }  
+//Create about windows
+function createAboutWindow(){
+    const aboutWindow= new BrowserWindow({
+        title: 'About Image Resizer',
+        width: 300,
+        height: 300
+});
+ aboutWindow.loadFile(path.join(__dirname, './render/about.html'));
+}
+
 
 //When the app is going to run 
 app.whenReady().then(()=>{
@@ -29,7 +42,7 @@ app.whenReady().then(()=>{
     //implement menu
 
     const mainMenu= Menu.buildFromTemplate(menu);
-    Menu.setApplicationMenu(mainMenu)
+    Menu.setApplicationMenu(mainMenu);
 
     app.on('activate',()=>{
         if(BrowserWindow.getAllWindows().length === 0){
@@ -38,16 +51,34 @@ app.whenReady().then(()=>{
     });
 })
 //Menu template
-const menu= {
-    label:'File',
-    submenu:[{
-        label: 'Quit',
-        click: ()=>app.quit(),
-        accelerator: 'CmdOrCtrl+W'
-    }
-   ]
-};
-
+const menu= [
+        ...(isMac ? 
+            [
+            {
+            label: app.name,
+            submenu: [
+                {
+                    label: 'About',
+                    click: createAboutWindow
+                },
+            ],
+         },
+      ]
+    : []),
+    {
+        role: 'fileMenu',
+    },
+    ...(!isMac ? [{
+        label: 'help',
+        submenu : [{
+            label:'about',
+            click: createAboutWindow
+        },
+    ],
+    },
+    ] 
+: []),
+];
 
 
 app.on('window-all-closed', ()=>{

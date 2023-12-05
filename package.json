@@ -1,0 +1,12 @@
+{
+  "name": "resize-imgs",
+  "productName": "Image Resize",
+  "version": "1.0.0",
+  "description": "App to resize image dimensions",
+  "main": "main.js",
+  "scripts": {
+    "start":"electron ."
+  },
+  "author": "Abdiel Mamani",
+  "license": "MIT"
+}

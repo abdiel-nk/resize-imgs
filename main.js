@@ -1,6 +1,6 @@
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain} = require('electron');
 const isMac = process.platform === 'darwin';
 const isDev = process.env.NODE_ENV !== 'development';
 
@@ -85,6 +85,11 @@ const menu= [
 : []),
 ];
 
+//response to ipcrenderer resize
+
+ipcMain.on('image:resize',(e,options)=>{
+    console.log(options);
+});
 
 app.on('window-all-closed', ()=>{
     if(isMac){

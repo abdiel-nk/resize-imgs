@@ -27,12 +27,30 @@ function loadImage(e){
     filename.innerText = file.name;
     outputPath.innerText= path.join(os.homedir(), 'imageresizer')
 }
+//Send image data to main
+
+function sendImage(e){
+    e.preventDefault();
+    const width = widthInput.value;
+    const height = heightInput.value;
+    if(!img.files[0]){
+        alertError('Please upload an image');
+        return;
+    }
+    if (width === '' || height === ''){
+        alertError('Please fill in a height and width');
+        return;
+    }
+    
+}
+
+
 //Check file is image
 function isFileImage(file){
     const acceptedImageTypes = ['image/gif' , 'image/png','image/jpeg'];
     return file && acceptedImageTypes.includes(file['type']);
 }
-function alertError(){
+function alertError(message){
     Toastify.toast({
         text: message,
         duration: 5000,
@@ -45,7 +63,7 @@ function alertError(){
     });
 }
 
-function alertSuccess(){
+function alertSuccess(message){
     Toastify.toast({
         text: message,
         duration: 5000,
@@ -59,4 +77,4 @@ function alertSuccess(){
 }
 
 img.addEventListener('change', loadImage);
-
+form.addEventListener('submit',sendImage)
